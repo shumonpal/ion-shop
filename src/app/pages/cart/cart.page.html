@@ -1,0 +1,68 @@
+<ion-header class="ion-no-border sub-page-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Cart</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-list *ngIf="carts">        
+    <ion-item *ngFor="let cart of carts">
+      <ion-grid class="carts">
+        <ion-row>
+          <ion-col size="3">
+            <ion-img [src]="cart.image"></ion-img>
+          </ion-col>
+          <ion-col size="9" >
+            <ion-row>
+              <ion-col size="12">
+                <h2 [routerLink]="['/product-details/', cart.pdt_id]" >{{cart.pdt_name}}</h2>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="7"><p>Size: {{cart.size}}</p></ion-col>
+              <ion-col size="5">
+                  <div class="group-btns">
+                    <ion-button slot="start" size="small" color="yellow" [routerLink]="['/product-details/', cart.pdt_id]" routerDirection="forward">
+                      <ion-icon name="pencil" color="light"></ion-icon>
+                    </ion-button>
+                    <ion-button slot="end" size="small" color="danger" (click)="daleteCart(cart)">
+                      <ion-icon name="trash" size="small"></ion-icon>
+                    </ion-button>
+                  </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><p>Color: <span class="product-color" [style]="'background-color: '+ cart.color"></span></p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><p>Price: ${{cart.price}}</p></ion-col>
+              <ion-col><p>Qty: {{cart.qty}}</p></ion-col>
+              <ion-col><p class="text-right">Total: {{cart.qty * cart.price}}</p></ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>        
+      </ion-grid>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-right"><h2>Total:</h2></ion-label>
+      <ion-label class="ion-text-right ion-padding-end" slot="end"><h2>${{totalPrice}}</h2></ion-label>
+    </ion-item>
+      <div class="cart-btns" class="ion-float-right ion-padding-top ion-padding-end" >
+        <ion-button size="small" color="light" (click)="goBack()" shape="round">
+          Back
+        </ion-button>
+        <ion-button size="small"  routerLink="/checkout" shape="round" color="yellow">
+          Checkout
+        </ion-button>
+      </div>
+    <!-- </ion-item> -->
+    
+  </ion-list>
+</ion-content>

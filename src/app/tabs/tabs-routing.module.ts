@@ -1,34 +1,61 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../guards/auth.guard';
+import { IsAuthenticatedGuard } from '../guards/is-authenticated.guard';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'home',
+        loadChildren: () => import('../pages/home/home.module').then( m => m.HomePageModule)
       },
       {
         path: 'tab2',
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'login',
+        loadChildren: () => import('../pages/login/login.module').then( m => m.LoginPageModule),
+        canActivate: [IsAuthenticatedGuard]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/home',
         pathMatch: 'full'
-      }
+      },
+      {
+        path: 'product-details/:id',
+        loadChildren: () => import('../pages/product-details/product-details.module').then( m => m.ProductDetailsPageModule)
+      },
+      {
+        path: 'checkout',
+        loadChildren: () => import('../pages/checkout/checkout.module').then( m => m.CheckoutPageModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'cart',
+        loadChildren: () => import('../pages/cart/cart.module').then( m => m.CartPageModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('../pages/user/profile/profile.module').then( m => m.ProfilePageModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'registration',
+        loadChildren: () => import('../pages/registration/registration.module').then( m => m.RegistrationPageModule),
+        canActivate: [IsAuthenticatedGuard]
+      },
+      
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ];

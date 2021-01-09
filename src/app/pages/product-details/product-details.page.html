@@ -1,0 +1,148 @@
+<ion-header class="ion-no-border sub-page-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button class="bordered" fill="solid" color="light" (click)="showCartPage()"> 
+        <ion-icon color="primary" name="cart-outline"></ion-icon>
+        <ion-badge color="yellow" mode="ios">{{cartCounter}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content *ngIf="product">
+
+  <div class="slides ion-margin-bottom" *ngIf="product.images">
+    <ion-slides pager="true" [options]="slidesOptions">
+      <ion-slide *ngFor="let image of product.images">
+        <img class="files" [src]="image.image">
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <div class="container">
+
+    <ion-item lines="none">
+      <ion-label class="product">
+        <h1>{{product.name}}</h1>
+        <p color="dark">In stock: <ion-badge color="yellow" mode="ios">{{product.in_stock}}</ion-badge>
+        </p>
+      </ion-label>
+
+    </ion-item>
+    
+    <form [formGroup]="adToCartForm">
+      <ion-item lines="none">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>
+                <p class="product-price">${{product.price}}</p>
+                <p class=up-price>Up: {{product.up_price}}</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="6" class="wrap-input">
+              <div class="wrapper" *ngIf="addToCartButton">
+                <button class="plusminus" (click)="handleMinus()">-</button>
+                  <input type="number" class="num" formControlName="qty" [value]="counter" name="qty" readonly/>
+                <button class="plusminus" (click)="handlePlus()">+</button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      
+      <ion-item lines="none" class="item-color" *ngIf="product.colors">
+        <ul>
+          <li>
+            <ion-label>Color:</ion-label>
+          </li>
+          <li *ngFor="let color of product.colors">
+            <label class="color-filter" for="color-filter" [style]="'background-color:'+color.color+';'"></label>
+            <input class="checkbox-color-filter products-filter" formControlName="color" type="radio" name="color" value="{{color.color}}">
+          </li>
+        </ul>
+      </ion-item>
+
+      <ion-item *ngIf="product.sizes">
+        <ion-label>Size</ion-label>
+        <ion-select placeholder="Select Size" formControlName="size" name="size">
+          <ion-select-option *ngFor="let size of product.sizes" value="{{size.size}}">{{size.size}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item lines="none" class="product">
+        <p>{{product.descp}}</p>
+      </ion-item>
+
+      
+      <ion-button *ngIf="addToCartButton; else addToCartNumber" (click)="addToCart()" expand="block" shape="round" color="yellow">
+        Add to cart <ion-icon slot="end" name="cart-outline"></ion-icon>
+      </ion-button>
+      
+      <ng-template #addToCartNumber>        
+        <ion-item lines="none" class="wrap-input add-to-cart-number">
+          <div class="wrapper">
+            <button class="plusminus plus" (click)="updateCart('minus')">-</button>
+            <input type="number" class="num" [value]="counter" name="qty" readonly/>
+            <button class="plusminus minus" (click)="updateCart('plus')">+</button>
+          </div>
+        </ion-item>
+      </ng-template>      
+      
+    </form>
+
+
+  </div>
+
+  <div *ngIf="related_pdt">
+    <ion-grid class="ion-padding-horizontal">
+      <ion-row class="ion-align-items-baseline">
+        <ion-col size="12">
+          <h4 class="title">
+            Recommended for you
+          </h4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides [options]="options">
+
+            <ion-slide class="product-slide" *ngFor="let product of related_pdt"  [routerLink]="'/product-details/'+product.id" >
+              <ion-card class="card">
+                <ion-card-content class="ion-text-left">
+
+                  <div class="img-wrapper">
+                    <ion-img [src]="product.images[0].image+'?auto=compress&cs=tinysrgb&dpr=2&w=500'"></ion-img>
+                  </div>
+                  
+                  <ion-card-title class="title">{{product.name}}</ion-card-title>
+                  <ion-card-subtitle>Brand: {{product.brand ? product.brand.name : 'No Brand'}}</ion-card-subtitle>
+                  <ion-card-subtitle>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star-outline"></ion-icon>
+                  </ion-card-subtitle>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,178 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.selected {
+  color: var(--ion-color-yellow);
+}
+.sub-page-header {
+  ion-toolbar,
+  ion-item {
+    --background: #f1f5f8;
+    background: #f1f5f8;
+    padding: 0 10px;
+  }
+
+  ion-toolbar {
+    .bordered {
+      --border-radius: 10px;
+      --box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff;
+    }
+  }
+
+  ion-item {
+    h3 {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    ion-avatar {
+      --border-radius: 40%;
+    }
+  }
+}
+
+.cart-list {
+  width: 100%;
+  p {
+    width: 33%;
+    float: left;
+  }
+}
+
+.text-right {
+  text-align: right;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: capitalize !important;
+  color: #6d6d6d;
+}
+
+.custom-font {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+ion-slides {
+  --bullet-background: rgb(185, 185, 185) !important;
+  --bullet-background-active: rgb(224, 1, 1) !important;
+}
+
+h1 {
+  font-size: 20px;
+}
+p {
+  color: #868686;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 5px 0;
+}
+.bg-dark-yellow {
+  background-color: #f2994a !important;
+}
+
+.wrap-input {
+  input {
+    text-align: center;
+    border: 1px solid #6c757d;
+  }
+
+  input[type="number"] {
+    -webkit-appearance: textfield !important;
+    -moz-appearance: textfield !important;
+    appearance: textfield !important;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+
+  .wrapper {
+    border: 2px #dcd3d3 solid;
+    width: 30vw;
+    height: 35px;
+    padding: 5px;
+    display: flex;
+    border-radius: 15px;
+    float: right;
+  }
+
+  .plusminus {
+    height: 100%;
+    width: 30%;
+    background: white;
+    border: none;
+    font-size: 25px;
+    color: #c5c4c4;
+    outline: none;
+    line-height: 0;
+  }
+
+  .num {
+    height: 100%;
+    width: 39%;
+    border: none;
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
+.add-to-cart-number {
+  .wrapper {
+    border: 2px var(--ion-color-primary) solid;
+    padding: 0px;
+    width: 100%;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+  .plusminus {
+    background-color: var(--ion-color-primary);
+    height: 33px;
+    margin-top: -1px;
+    color: white;
+  }
+  .plus {
+    border-radius: 15px 0 0 15px;
+  }
+  .minus {
+    border-radius: 0 15px 15px 0;
+    margin-left: 6px;
+  }
+}
+
+.cart-btn {
+  min-width: 50%;
+  float: left;
+}
+// .cart-modal .modal-wrapper{
+//   height: 532px !important;
+//   top: 9% !important;
+//   position: absolute !important;
+//   display: block  !important;
+// }
+
+.error-msg {
+  color: #ff5050e8;
+  font-size: 13px;
+  margin-top: -8px;
+  margin-left: 15px;
+}
+
+.group-btns {
+  float: right;
+  ion-button {
+    margin: 0 0 0 5px !important;
+    width: 35px;
+    padding: 0 !important;
+  }
+}

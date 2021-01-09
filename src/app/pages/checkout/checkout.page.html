@@ -1,0 +1,118 @@
+<ion-header class="ion-no-border sub-page-header">
+  <ion-toolbar>
+    <ion-title>checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="carts">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>
+            <h4 style="font-size: 20px;">Order review</h4>
+          </ion-label>
+        </ion-item>     
+        <ion-item *ngFor="let cart of carts">
+          <ion-grid class="carts">
+              <ion-row>              
+                <ion-col size="2">
+                  <ion-thumbnail>
+                    <img [src]="cart.image"/>
+                  </ion-thumbnail>
+                </ion-col>
+                <ion-col size="10">
+                  <h2 style="margin-top: 16px;margin-left: 10px;" [routerLink]="['/product-details/', cart.pdt_id]" >{{cart.pdt_name}}</h2>
+                </ion-col>
+              </ion-row>         
+              <ion-row>
+                <ion-col><p>Price: ${{cart.price}}</p></ion-col>
+                <ion-col><p>Qty: {{cart.qty}}</p></ion-col>
+                <ion-col><p class="text-right">Total: {{cart.qty * cart.price}}</p></ion-col>
+              </ion-row>       
+          </ion-grid>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-right"><h2>Total:</h2></ion-label>
+          <ion-label class="ion-text-right ion-padding-end" slot="end"><h2>${{totalPrice}}</h2></ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    
+    <form [formGroup]="checkoutForm" (submit)="checkoutSubmit()">    
+      <ion-card>
+        <ion-card-content>
+          <ion-item>
+            <ion-label><h4 style="font-size: 20px;">Shipping Option</h4></ion-label>
+          </ion-item>
+          <ion-radio-group formControlName="shipping">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="10">
+                  <ion-item>
+                    <ion-label><h6>Free Shipping</h6></ion-label>
+                    <ion-radio color="tertiary" value="0.00" slot="start"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2"><p style="margin-top: 17px;">$0.00</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="10">
+                  <ion-item>
+                    <ion-label><h6>Postal mail</h6></ion-label>
+                    <ion-radio color="tertiary" value="1.49" slot="start"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2"><p style="margin-top: 17px;">$1.49</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="10">
+                  <ion-item>
+                    <ion-label><h6>DSL(Within 48hr)</h6></ion-label>
+                    <ion-radio color="tertiary" value="4.99" slot="start"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2"><p style="margin-top: 17px;">$4.99</p></ion-col>
+              </ion-row>
+            </ion-grid> 
+          </ion-radio-group>       
+        </ion-card-content>
+      </ion-card>
+      
+      <ion-card>
+        <ion-card-content>
+          <ion-item>
+            <ion-label><h4 style="font-size: 20px;">Payment Option</h4></ion-label>
+          </ion-item>
+          <ion-radio-group formControlName="payment_opt">
+            <ion-item>
+              <ion-label><h6>Paypal</h6></ion-label>
+              <ion-radio slot="start" color="tertiary" value="paypal" checked="checked"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label><h6>Master/Visa</h6></ion-label>
+              <ion-radio slot="start" color="tertiary" value="master"></ion-radio>
+            </ion-item>
+          </ion-radio-group>       
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-item>
+          <ion-label><h4>Grand Total </h4></ion-label>
+          <ion-label slot="end" class="ion-text-right"><h4>${{grandTotal}}</h4></ion-label>
+        </ion-item>
+      </ion-card>
+
+      <div class="cart-btns" class="ion-float-right ion-padding-top ion-padding-end" >
+        <ion-button size="small" color="light" (click)="goBack()" shape="round">
+          Back
+        </ion-button>
+        <ion-button size="small"  routerLink="/checkout" shape="round" color="yellow"  type="submit" [disabled]="checkoutForm.invalid">
+          Order
+        </ion-button>
+      </div>
+    </form>
+    
+  </ion-list>
+</ion-content>

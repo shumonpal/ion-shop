@@ -1,0 +1,135 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row  class="">
+          <ion-col>
+            <div>
+              <div style="width: 100%;">
+                <ion-avatar style="margin: auto;">
+                  <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                </ion-avatar> 
+              </div>              
+              <div>
+                <h2 class="ion-text-center">{{user.name}}</h2>
+                <p class="ion-text-center">{{user.email}}</p>
+              </div>            
+            </div>            
+          </ion-col>
+        </ion-row>
+      </ion-grid>      
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-grid >
+        <ion-row>
+          <ion-col size="10">
+            <ion-card-title style="color: #6b6b6b; font-size: 18px;">Shipping Address</ion-card-title>
+          </ion-col>          
+          <ion-col size="2">
+            <ion-button *ngIf="!isEdit" size="small" color="yellow" (click)="onClickEdit()">
+              <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid> 
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row  class="ion-justify-content-around">
+          <ion-col>
+            <form [formGroup]="editAddressForm" (submit)="onSubmitEditAddressForm()" *ngIf="isEdit;else noEdit">
+              <ion-item>
+                <ion-label position="floating">Country <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input formControlName="country" type="text"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="initErrorFormMsg.country" lines="none">
+                <ion-text color="danger" class="form-error">                  
+                </ion-text>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">State <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input formControlName="state" type="text"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="initErrorFormMsg.state" lines="none">
+                <ion-text color="danger" class="form-error"> {{initErrorFormMsg.state}}                
+                </ion-text>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Address <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input formControlName="address" type="text"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="initErrorFormMsg.address" lines="none">
+                <ion-text color="danger" class="form-error"> {{initErrorFormMsg.address}}                 
+                </ion-text>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Phone <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input formControlName="phone" type="text"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="initErrorFormMsg.phone" lines="none">
+                <ion-text color="danger" class="form-error"> {{initErrorFormMsg.phone}}                 
+                </ion-text>
+              </ion-item>
+              <div class="cart-btns"  class="ion-float-right ion-padding-top">
+                <ion-button slot="start" size="small" color="light" (click)="cancelEdit()">
+                  Cancel
+                </ion-button>
+                <ion-button slot="end" size="small" color="tertiary" type="submit">
+                  Save
+                </ion-button>
+              </div>
+            </form>
+
+            <ng-template #noEdit>
+              <p><strong>Country:</strong> {{user.country}}</p>
+              <p><strong>State:</strong> {{user.state}}</p>
+              <p><strong>Address:</strong> {{user.address}}</p>
+              <p><strong>Phone:</strong> {{user.phone}}</p>
+            </ng-template>
+            
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-grid >
+        <ion-row>
+          <ion-col size="10">
+            <ion-card-title style="color: #6b6b6b; font-size: 18px;">Card Information</ion-card-title>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button size="small" color="yellow">
+              <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid> 
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row  class="ion-justify-content-around">
+          <ion-col>
+            <p><strong>Card Type:</strong> Master</p>
+            <p><strong>CArd No:</strong> 5677*****8979</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
