@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { CartService } from 'src/app/providers/cart.service';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
+import { UtilityService } from 'src/app/providers/utility.service';
 
 @Component({
   selector: 'app-checkout',
@@ -13,14 +14,15 @@ export class CheckoutPage implements OnInit {
   carts: any = [];
   product:object = {};
   totalPrice:number;
-  grandTotal:number;
+  grandTotal;
 
   checkoutForm:FormGroup;
 
   constructor(
     private cartSrvc:CartService,
     private navC:NavController,
-    private payPal: PayPal
+    private payPal: PayPal,
+    private util: UtilityService
   ) {
     this.cartSrvc.getAll().then((items) => {
       this.carts = items;
@@ -67,11 +69,16 @@ export class CheckoutPage implements OnInit {
         // Only needed if you get an "Internal Service Error" after PayPal login!
         //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
       })).then(() => {
-        let payment = new PayPalPayment('3.33', 'USD', 'Description', 'sale');
+        const pckIDescp = "Package-"+Date.now();
+        let payment = new PayPalPayment(this.grandTotal, 'USD', pckIDescp, 'sale');
         this.payPal.renderSinglePaymentUI(payment).then((res) => {
           // Successfully paid
+          this.util.defaultToast("Successfully paid" + res.response.id);
           console.log("Successfully paid", res);
-          
+          //save to database
+          //delete cart
+          //redirect to order page
+          this.navC.navigateForward("/order");
           // Example sandbox response
           //
           // {
@@ -92,15 +99,19 @@ export class CheckoutPage implements OnInit {
         }, () => {
           // Error or render dialog closed without being successful
           console.log("Error or render dialog closed without being successful");
+          this.util.defaultToast("Error or render dialog closed without being successful")
           
         });
       }, () => {
         // Error in configuration
         console.log("Error in configuration");
+        this.util.defaultToast("Error in configuration")
+
       });
     }, () => {
       // Error in initialization, maybe PayPal isn't supported or something else
       console.log(" Error in initialization, maybe PayPal isn't supported or something else");
+      this.util.defaultToast("Error in initialization, maybe PayPal isn't supported or something else")
       
     });
   }
