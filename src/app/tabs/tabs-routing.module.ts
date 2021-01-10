@@ -50,6 +50,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/registration/registration.module').then( m => m.RegistrationPageModule),
         canActivate: [IsAuthenticatedGuard]
       },
+      {
+        path: 'shop',
+        loadChildren: () => import('../pages/shop/shop.module').then( m => m.ShopPageModule)
+      }
       
     ]
   },

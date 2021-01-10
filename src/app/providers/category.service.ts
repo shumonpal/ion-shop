@@ -13,4 +13,8 @@ export class CategoryService {
   allCategories(){
     return this.http.get(`${this.ROOT}/categories`).toPromise();
   }
+
+  categoryById(id){
+    return this.http.get(`${this.ROOT}/category/${id}`).toPromise();
+  }
 }

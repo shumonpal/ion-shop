@@ -54,10 +54,14 @@
   </div>
   <ion-grid *ngIf="categories" class="ion-no-padding categories">
     <div class="grid-container" style="grid-auto-flow: row dense;">
-      <div class="grid-item bg-dark-yellow"  *ngFor="let category of categories">
-        <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon>
-        <h2>{{category.name}}</h2>
-      </div>      
+      <div *ngFor="let category of categories" >
+        <div class="grid-item bg-dark-yellow" [routerLink]="['/shop']" 
+          [queryParams]="{ category_id: category.id }">
+          <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon>
+          <h2>{{category.name}}</h2>
+        </div>
+      </div>
+            
     </div>     
   </ion-grid>
 
@@ -181,10 +185,14 @@
   </div>
   <ion-grid *ngIf="brands" class="ion-no-padding categories">
     <div class="grid-container" style="grid-auto-flow: row dense;">
-      <div class="grid-item bg-dark-yellow"  *ngFor="let brand of brands">
-        <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon>
-        <h2>{{brand.name}}</h2>
-      </div>      
+      <div  *ngFor="let brand of brands">
+        <div class="grid-item bg-dark-yellow" [routerLink]="['/shop']" 
+          [queryParams]="{ brand_id: brand.id }">
+          <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon>
+          <h2>{{brand.name}}</h2>
+        </div>  
+      </div>
+          
     </div>     
   </ion-grid>
   

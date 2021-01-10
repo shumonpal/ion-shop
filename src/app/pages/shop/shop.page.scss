@@ -1,0 +1,23 @@
+.categories {
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    grid-gap: 10px;
+    background: none;
+    padding: 10px;
+  }
+
+  .grid-container > div {
+    text-align: center;
+    font-size: 18px;
+    text-transform: capitalize;
+    width: 104px;
+    padding: 10px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 14px;
+    color: white;
+  }
+}

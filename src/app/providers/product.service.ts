@@ -40,6 +40,12 @@ export class ProductService {
   pdtById(id) {
     return this.http.get(`${ARROA.ROOT}/product/${id}`).toPromise();
   }
+  pdtByCategory(id) {
+    return this.http.get(`${ARROA.ROOT}/products-by-category/${id}`).toPromise();
+  }
+  pdtByBrand(id) {
+    return this.http.get(`${ARROA.ROOT}/products-by-brand/${id}`).toPromise();
+  }
 
   related_pdt(url) {
     return this.http.get(url).toPromise();
