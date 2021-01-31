@@ -90,11 +90,14 @@ export class AuthService {
 
   user(){
     return this.token().then((token) => {
-      let headers = new HttpHeaders({'Content-Type': 'application/json',
+      if (token) {
+        let headers = new HttpHeaders({'Content-Type': 'application/json',
                                      'Accept':'application/json',
                                      'Authorization': `${token}`,
                                     });
-      return this.http.post(`${this.ROOT}/me`, {}, {headers: headers}).toPromise();
+        return this.http.post(`${this.ROOT}/me`, {}, {headers: headers}).toPromise();
+      }
+      
     })
   }
 

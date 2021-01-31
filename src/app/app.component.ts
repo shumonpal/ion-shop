@@ -12,7 +12,7 @@ import { AuthService } from './providers/auth.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  userName: string;
+  userName: string = '';
 
   constructor(
     private platform: Platform,
@@ -33,7 +33,10 @@ export class AppComponent {
   }
   getUser(){
     this.auth.user().then((user:any) => {
-      this.userName = user.name;
+      if (user) {
+        this.userName = user.name;
+        
+      }
       // console.log("user" , user.name);
       
     })

@@ -43,6 +43,9 @@ export class ProductService {
   pdtByCategory(id) {
     return this.http.get(`${ARROA.ROOT}/products-by-category/${id}`).toPromise();
   }
+  pdtBySubcategory(id) {
+    return this.http.get(`${ARROA.ROOT}/products-by-subcategory/${id}`).toPromise();
+  }
   pdtByBrand(id) {
     return this.http.get(`${ARROA.ROOT}/products-by-brand/${id}`).toPromise();
   }

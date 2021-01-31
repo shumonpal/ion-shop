@@ -103,6 +103,8 @@ export class HomePage implements OnInit {
   async getBrands(){
     await this.brand.allBrands().then((res: any) => {
       this.brands = res.data;
+      console.log('brands', this.brands);
+      
     }).then(() => {
       this.weekOfDealPdt();
     }).catch((err) => {

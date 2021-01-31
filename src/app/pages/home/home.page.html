@@ -45,7 +45,7 @@
           </h4>
         </ion-col>
         <ion-col size="6">
-          <h4 class="more ion-text-end">
+          <h4 class="more ion-text-end" >
             Show more
           </h4>
         </ion-col>
@@ -54,9 +54,9 @@
   </div>
   <ion-grid *ngIf="categories" class="ion-no-padding categories">
     <div class="grid-container" style="grid-auto-flow: row dense;">
-      <div *ngFor="let category of categories" >
+      <div *ngFor="let category of categories">
         <div class="grid-item bg-dark-yellow" [routerLink]="['/shop']" 
-          [queryParams]="{ category_id: category.id }">
+          [queryParams]="{ category_id: category.id }" style="padding: 10px 0;">
           <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon>
           <h2>{{category.name}}</h2>
         </div>
@@ -74,7 +74,8 @@
           </h4>
         </ion-col>
         <ion-col size="6">
-          <h4 class="more ion-text-end">
+          <h4 class="more ion-text-end"  [routerLink]="['/shop']" 
+          [queryParams]="{ product_list: 'feature' }">
             View more
           </h4>
         </ion-col>
@@ -132,7 +133,8 @@
           </h4>
         </ion-col>
         <ion-col size="6">
-          <h4 class="more ion-text-end">
+          <h4 class="more ion-text-end" [routerLink]="['/shop']" 
+          [queryParams]="{ product_list: 'new' }">
             View more
           </h4>
         </ion-col>
@@ -186,9 +188,10 @@
   <ion-grid *ngIf="brands" class="ion-no-padding categories">
     <div class="grid-container" style="grid-auto-flow: row dense;">
       <div  *ngFor="let brand of brands">
-        <div class="grid-item bg-dark-yellow" [routerLink]="['/shop']" 
-          [queryParams]="{ brand_id: brand.id }">
-          <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon>
+        <div class="grid-item bg-dark-yellow" routerLink="/shop" 
+          [queryParams]="{ brand_id: brand.id }" style="padding: 10px 0;">
+          <!-- <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon> -->
+          <img [src]="brand.logo" alt="brand.name" style="height: 45px;">
           <h2>{{brand.name}}</h2>
         </div>  
       </div>
@@ -205,7 +208,8 @@
           </h4>
         </ion-col>
         <ion-col size="6">
-          <h4 class="more ion-text-end">
+          <h4 class="more ion-text-end" [routerLink]="['/shop']" 
+          [queryParams]="{ product_list: 'weekOfDeal' }">
             View more
           </h4>
         </ion-col>
@@ -242,21 +246,6 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
-
-  <div class="ion-padding">
-    <ion-row>
-      <ion-col size="6">
-        <ion-badge color="light" class="ion-margin-end">
-          Habib Dev.
-        </ion-badge>
-      </ion-col>
-      <ion-col size="6" class="ion-text-end">
-        <ion-badge color="light">
-          habib.al-mawali.com
-        </ion-badge>
-      </ion-col>
-    </ion-row>
   </div>
 
 </ion-content>

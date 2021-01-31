@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Shop</ion-title>
+    <ion-title>{{pageTitleKey}} <span *ngIf="pageTitleValue">| </span><strong style="text-transform: capitalize;">{{pageTitleValue}}</strong></ion-title>
     <ion-buttons slot="end">
       <ion-button>
         <ion-icon name="options-outline"></ion-icon>
@@ -16,9 +16,13 @@
 </ion-header>
 
 <ion-content>
+    <!-- Category -->
+
   <ion-grid *ngIf="subcategoryByCategory" class="ion-no-padding categories">
     <div class="grid-container" style="grid-auto-flow: row dense;">
-      <div class="grid-item bg-dark-yellow"  *ngFor="let cat of subcategoryByCategory">
+      <div class="grid-item"  *ngFor="let cat of subcategoryByCategory" 
+        routerLink="/shop" [queryParams]="{ category_id: Qparams['category_id'], subcategory_id: cat.id }" 
+        [ngClass]="(Qparams['subcategory_id'] == cat.id) ? 'bg-light-yellow' : 'bg-dark-yellow'" >
         <ion-icon slot="icon-only" name="fast-food-outline" color="light" size="large"></ion-icon>
         <h2>{{cat.name}}</h2>
       </div>      
@@ -50,4 +54,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-list></ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
