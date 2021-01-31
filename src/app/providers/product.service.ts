@@ -21,33 +21,33 @@ export class ProductService {
     private http: HttpClient
   ) { }
 
-  allProducts() {
+  allProducts(pageNo) {
     // return this.http.get(ARROA.products).pipe((map((res:any) => {
     //   res.data.data;
     // })));
-    return this.http.get(ARROA.products).toPromise();
+    return this.http.get(`${ARROA.products}?page=${pageNo}`).toPromise();
   }
-  featureProducts() {
-    return this.http.get(`${ARROA.ROOT}/product-feature`).toPromise();
+  featureProducts(pageNo) {
+    return this.http.get(`${ARROA.ROOT}/product-feature?page=${pageNo}`).toPromise();
   }
-  newArrived() {
-    return this.http.get(`${ARROA.ROOT}/product-new`).toPromise();
+  newArrived(pageNo) {
+    return this.http.get(`${ARROA.ROOT}/product-new?page=${pageNo}`).toPromise();
   }
-  weekDeal() {
-    return this.http.get(`${ARROA.ROOT}/product-week-deals`).toPromise();
+  weekDeal(pageNo) {
+    return this.http.get(`${ARROA.ROOT}/product-week-deals?page=${pageNo}`).toPromise();
   }
 
   pdtById(id) {
     return this.http.get(`${ARROA.ROOT}/product/${id}`).toPromise();
   }
-  pdtByCategory(id) {
-    return this.http.get(`${ARROA.ROOT}/products-by-category/${id}`).toPromise();
+  pdtByCategory(id, pageNo) {
+    return this.http.get(`${ARROA.ROOT}/products-by-category/${id}?page=${pageNo}`).toPromise();
   }
-  pdtBySubcategory(id) {
-    return this.http.get(`${ARROA.ROOT}/products-by-subcategory/${id}`).toPromise();
+  pdtBySubcategory(id, pageNo) {
+    return this.http.get(`${ARROA.ROOT}/products-by-subcategory/${id}?page=${pageNo}`).toPromise();
   }
-  pdtByBrand(id) {
-    return this.http.get(`${ARROA.ROOT}/products-by-brand/${id}`).toPromise();
+  pdtByBrand(id, pageNo) {
+    return this.http.get(`${ARROA.ROOT}/products-by-brand/${id}?page=${pageNo}`).toPromise();
   }
 
   related_pdt(url) {

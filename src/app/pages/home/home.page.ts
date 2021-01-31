@@ -63,7 +63,7 @@ export class HomePage implements OnInit {
   }
 
   async getFeatureProducts(){
-    await this.pdtSrvc.featureProducts().then((res: any) => {
+    await this.pdtSrvc.featureProducts(1).then((res: any) => {
       this.banners = res.data.slice(0, 5);
       this.featureProducts = res.data.slice(0, 10);      
     }).catch((err) => {
@@ -86,7 +86,7 @@ export class HomePage implements OnInit {
   }
 
   async allProducts(){
-    await this.pdtSrvc.newArrived().then((res: any) => {
+    await this.pdtSrvc.newArrived(1).then((res: any) => {
       
       const pdt = res.data.filter(val => {
         return val.composition_id == 2;
@@ -113,7 +113,7 @@ export class HomePage implements OnInit {
   }
 
   async weekOfDealPdt(){
-    await this.pdtSrvc.weekDeal().then((res: any) => {
+    await this.pdtSrvc.weekDeal(1).then((res: any) => {
       this.weekOfDeal = res.data;
       // console.log('weekOfDeal', this.weekOfDeal);
     }).catch((err) => {

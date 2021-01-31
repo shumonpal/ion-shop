@@ -17,6 +17,8 @@ export class ShopPage implements OnInit {
   Qparams:any = [];
   pageTitleKey:string;
   pageTitleValue:string;
+  pageNo: number = 1;
+  eventTargetDisabled: boolean;
 
   constructor(
     private acRoute: ActivatedRoute,
@@ -27,25 +29,7 @@ export class ShopPage implements OnInit {
     ) { 
     this.acRoute.queryParams.subscribe((res) => {
       this.Qparams = res;  
-      console.log('Qparams', res);   
-      if (this.Qparams['category_id'] && !this.Qparams['subcategory_id']) {
-        this.getPdtByCat();      
-      }
-      else if (this.Qparams['subcategory_id']) {
-        this.getPdtBysubCat();
-      }
-      else if (this.Qparams['brand_id']) {
-        this.getPdtByBrand();      
-      } 
-      else if (this.Qparams['product_list'] == "feature") {
-        this.getfeaturePdt();      
-      } 
-      else if (this.Qparams['product_list'] == "new") {
-        this.getNewPdt();      
-      } 
-      else if (this.Qparams['product_list'] == "weekOfDeal") {
-        this.weekOfDealPdt();      
-      } 
+      this.initProducts()
     });
     
    }
@@ -53,29 +37,72 @@ export class ShopPage implements OnInit {
   ngOnInit() {
   }
 
-  loadData(event) {
-    setTimeout(() => {
-      console.log('Done');
-      event.target.complete();
+  initProducts(){
+    if (this.Qparams['category_id'] && !this.Qparams['subcategory_id']) {
+      this.getPdtByCat();      
+    }
+    else if (this.Qparams['subcategory_id']) {
+      this.getPdtBysubCat();
+    }
+    else if (this.Qparams['brand_id']) {
+      this.getPdtByBrand();      
+    } 
+    else if (this.Qparams['product_list'] == "feature") {
+      this.getfeaturePdt();      
+    } 
+    else if (this.Qparams['product_list'] == "new") {
+      this.getNewPdt();      
+    } 
+    else if (this.Qparams['product_list'] == "weekOfDeal") {
+      this.weekOfDealPdt();      
+    } 
+  }
 
+  loadData(event) {
+      console.log('Done');
+      this.acRoute.queryParams.subscribe((res) => {
+        this.pageNo++;
+        this.Qparams = res;  
+        console.log('Qparams', res);   
+        console.log('pageNo', this.pageNo);   
+        this.initProducts()
+      });
+      event.target.complete();
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (this.products.length == 1000) {
+      if (this.eventTargetDisabled) {
         event.target.disabled = true;
-      }
-    }, 500);
+      };
   }
 
   getPdtByCat(){
-    this.pdtS.pdtByCategory(this.Qparams['category_id']).then((res:any) => {
-      this.products = res.data;
+    this.pdtS.pdtByCategory(this.Qparams['category_id'], this.pageNo).then((res:any) => {
+      //this.products = res.data;
+      for (let i = 0; i < res.data.length; i++) {
+        this.products.push(res.data[i]);
+      }
+      if (res.meta.current_page == res.meta.last_page) {
+        this.eventTargetDisabled = true;
+      }
+      console.log('current_page', res.meta.current_page);
       this.getSubcat();
     })
   }
   getPdtBysubCat(){
-    this.pdtS.pdtBySubcategory(this.Qparams['subcategory_id']).then((res:any) => {
-      this.products = res.data;
-      this.getSubcat()
+    this.pdtS.pdtBySubcategory(this.Qparams['subcategory_id'], this.pageNo).then((res:any) => {
+      if (res.meta.current_page == 1) {
+        this.products = res.data;
+        this.getSubcat()
+      } else {
+        for (let i = 0; i < res.data.length; i++) {
+          console.log("pdtBySubcategory", res.data[i]);
+          this.products.push(res.data[i]);
+        }
+      }
+      
+      if (res.meta.current_page == res.meta.last_page) {
+        this.eventTargetDisabled = true;
+      }
     })
   }
   getSubcat(){
@@ -90,27 +117,55 @@ export class ShopPage implements OnInit {
   }
   
   getPdtByBrand(){
-    this.pdtS.pdtByCategory(this.Qparams['brand_id']).then((res:any) => {
-      this.products = res.data;
-      this.pageTitleKey = "Brand";
+    this.pdtS.pdtByCategory(this.Qparams['brand_id'], this.pageNo).then((res:any) => {
+      for (let i = 0; i < res.data.length; i++) {
+        this.products.push(res.data[i]);
+      }
+      if (res.meta.current_page == res.meta.last_page) {
+        this.eventTargetDisabled = true;
+      }
+      if (this.pageNo == 1) {       
+        this.pageTitleKey = "Brand";
+      }
     })
   }
   getfeaturePdt(){
-    this.pdtS.featureProducts().then((res:any) => {
-      this.products = res.data;
-      this.pageTitleKey = "Feature Products";
+    this.pdtS.featureProducts(this.pageNo).then((res:any) => {
+      for (let i = 0; i < res.data.length; i++) {
+        this.products.push(res.data[i]);
+      }
+      if (res.meta.current_page == res.meta.last_page) {
+        this.eventTargetDisabled = true;
+      }
+      if (this.pageNo == 1) {
+        this.pageTitleKey = "Feature Products";        
+      }
     })
   }
   getNewPdt(){
-    this.pdtS.newArrived().then((res:any) => {
-      this.products = res.data;
-      this.pageTitleKey = "New Products";
+    this.pdtS.newArrived(this.pageNo).then((res:any) => {
+      for (let i = 0; i < res.data.length; i++) {
+        this.products.push(res.data[i]);
+      }
+      if (res.meta.current_page == res.meta.last_page) {
+        this.eventTargetDisabled = true;
+      }
+      if (this.pageNo == 1) {
+        this.pageTitleKey = "New Products";        
+      }
     })
   }
   weekOfDealPdt(){
-    this.pdtS.weekDeal().then((res:any) => {
-      this.products = res.data;
-      this.pageTitleKey = "Week of Deal";
+    this.pdtS.weekDeal(this.pageNo).then((res:any) => {
+      for (let i = 0; i < res.data.length; i++) {
+        this.products.push(res.data[i]);
+      }
+      if (res.meta.current_page == res.meta.last_page) {
+        this.eventTargetDisabled = true;
+      }
+      if (this.pageNo == 1) {       
+        this.pageTitleKey = "Week of Deal";
+      }
     })
   }
 
